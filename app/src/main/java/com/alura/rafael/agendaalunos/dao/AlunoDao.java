@@ -71,7 +71,7 @@ public class AlunoDao extends SQLiteOpenHelper {
             Aluno aluno = new Aluno();
             aluno.setId(c.getLong(c.getColumnIndex("id")));
             aluno.setNome(c.getString(c.getColumnIndex("nome")));
-            aluno.setEnd(c.getString(c.getColumnIndex("end")));
+            aluno.setEnd(c.getString(c.getColumnIndex("endereco")));
             aluno.setTel(c.getString(c.getColumnIndex("tel")));
             aluno.setSite(c.getString(c.getColumnIndex("site")));
             aluno.setNota(c.getDouble(c.getColumnIndex("nota")));
