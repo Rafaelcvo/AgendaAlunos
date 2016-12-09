@@ -39,6 +39,8 @@ public class FormularioActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
+
+//        O inflater esta transformando um menu xml em um menu de verdade
         inflater.inflate(R.menu.menu_formulario, menu);
         return super.onCreateOptionsMenu(menu);
     }
