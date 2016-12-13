@@ -49,15 +49,21 @@ public class AlunoDao extends SQLiteOpenHelper {
                 sql. Entao a melhor formar é pedir ao SQLLite para fazer o tratamento.
         String sql = "INSERT INTO Alunos (nome, endereco, tel, site, nota) VALUES ()";*/
 
+        ContentValues dados = pegaDadosDoAluno(aluno);
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert("Alunos", null, dados);
+    }
+
+    @NonNull
+    private ContentValues pegaDadosDoAluno(Aluno aluno) {
         ContentValues dados = new ContentValues();
         dados.put("nome", aluno.getNome());
         dados.put("endereco", aluno.getEnd());
         dados.put("tel", aluno.getTel());
         dados.put("site", aluno.getSite());
         dados.put("nota", aluno.getNota());
-
-        SQLiteDatabase db = getWritableDatabase();
-        db.insert("Alunos", null, dados);
+        return dados;
     }
 
     public List<Aluno> buscaAlunos() {
@@ -87,5 +93,12 @@ public class AlunoDao extends SQLiteOpenHelper {
         String[] params = {aluno.getId().toString()};
         db.delete("Alunos", "id = ?", params);
 
+    }
+
+    public void altera(Aluno aluno) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues dados = pegaDadosDoAluno(aluno);
+        String[] params = {aluno.getId().toString()};
+         db.update("Alunos", dados, "id = ?", params);
     }
 }
