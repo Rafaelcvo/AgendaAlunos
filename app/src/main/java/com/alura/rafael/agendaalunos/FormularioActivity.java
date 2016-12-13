@@ -1,5 +1,6 @@
 package com.alura.rafael.agendaalunos;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,6 +24,14 @@ public class FormularioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_formulario);
 
         helper = new FormularioHelper(this);
+
+//     È preciso recuperar os dados da intent, para isto iremos criar uma nova intent
+        Intent intent = getIntent();
+        Aluno aluno = (Aluno) intent.getSerializableExtra("aluno");
+
+       if (aluno != null){
+           helper.preencheFormulario(aluno);
+       }
 
 //        Button btn_salvar = (Button) findViewById(R.id.formulario_salvar);
 //        btn_salvar.setOnClickListener(new View.OnClickListener() {

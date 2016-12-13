@@ -1,9 +1,15 @@
 package com.alura.rafael.agendaalunos.modelo;
 
+import java.io.Serializable;
+
 /**
  * Created by Desktop on 29/11/2016.
  */
-public class Aluno {
+
+/*Aqui implementamos a classe serializable para o aluno, com isto podemos transferir
+dados em bytes de uma classe para outrs. No exemplo recuperamos as informaçoes no formulario
+para poder editar o aluno.*/
+public class Aluno implements Serializable {
 
     private Long id;
     private String nome;
@@ -11,6 +17,7 @@ public class Aluno {
     private String tel;
     private String site;
     private Double nota;
+
 
     public Long getId() {
         return id;
