@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * Created by Desktop on 06/12/2016.
+ * Created by Rafael on 06/12/2016.
  */
 
 public class AlunoDao extends SQLiteOpenHelper {
