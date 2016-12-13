@@ -25,7 +25,7 @@ public class FormularioActivity extends AppCompatActivity {
 
         helper = new FormularioHelper(this);
 
-//     È preciso recuperar os dados da intent, para isto iremos criar uma nova intent...
+//     È preciso recuperar os dados da intent, para isto iremos criar uma nova intent....
         Intent intent = getIntent();
         Aluno aluno = (Aluno) intent.getSerializableExtra("aluno");
 
