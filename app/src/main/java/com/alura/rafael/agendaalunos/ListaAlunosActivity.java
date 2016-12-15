@@ -1,6 +1,8 @@
 package com.alura.rafael.agendaalunos;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.provider.Browser;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -77,18 +79,31 @@ public class ListaAlunosActivity extends AppCompatActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, final ContextMenu.ContextMenuInfo menuInfo) {
 
-        /*Esse comportamento pode ser deletado pois nao sera preciso usa lo.
-        super.onCreateContextMenu(menu, v, menuInfo);*/
-        MenuItem deletar = menu.add("Deletar");
-        deletar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                /*Lembrando que o menuItem é o item do deletar e nao o menu do item aluno*
+         /*Lembrando que o menuItem é o item do deletar e nao o menu do item aluno*
                 e graças ao metodo passado como parametro no menuInfo que ira apresentar o conteudo que foi clicado/
                  */
 //                Vamos informar que o menuInfo é um adapter, para isto fazemos a conversao.
-                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-                Aluno aluno = (Aluno) listaAlunos.getItemAtPosition(info.position);
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        final Aluno aluno = (Aluno) listaAlunos.getItemAtPosition(info.position);
+        /*Esse comportamento pode ser deletado pois nao sera preciso usa lo.
+        super.onCreateContextMenu(menu, v, menuInfo);*/
+        MenuItem deletar = menu.add("Deletar");
+        MenuItem itemSite = menu.add("Visitar site");
+        Intent intentSite = new Intent(Intent.ACTION_VIEW);
+
+        String site = aluno.getSite();
+        if (!site.startsWith("http://")){
+            site = "http://" + aluno.getSite();
+        }
+
+        intentSite.setData(Uri.parse(site));
+        itemSite.setIntent(intentSite);
+
+        deletar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+
+
                 AlunoDao dao = new AlunoDao(ListaAlunosActivity.this);
                 dao.deleta(aluno);
                 dao.close();
