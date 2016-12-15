@@ -1,11 +1,15 @@
 package com.alura.rafael.agendaalunos;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.provider.Browser;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
@@ -37,7 +41,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> lista, View iten, int position, long id) {
                 Aluno aluno = (Aluno) listaAlunos.getItemAtPosition(position);
-               // Toast.makeText(ListaAlunosActivity.this, "Aluno  " + aluno.getNome(), Toast.LENGTH_LONG).show();
+                // Toast.makeText(ListaAlunosActivity.this, "Aluno  " + aluno.getNome(), Toast.LENGTH_LONG).show();
                 Intent vaiProForulario = new Intent(ListaAlunosActivity.this, FormularioActivity.class);
                 vaiProForulario.putExtra("aluno", aluno);
                 startActivity(vaiProForulario);
@@ -88,16 +92,46 @@ public class ListaAlunosActivity extends AppCompatActivity {
         /*Esse comportamento pode ser deletado pois nao sera preciso usa lo.
         super.onCreateContextMenu(menu, v, menuInfo);*/
         MenuItem deletar = menu.add("Deletar");
+
+
         MenuItem itemSite = menu.add("Visitar site");
         Intent intentSite = new Intent(Intent.ACTION_VIEW);
-
         String site = aluno.getSite();
-        if (!site.startsWith("http://")){
+        if (!site.startsWith("http://")) {
             site = "http://" + aluno.getSite();
         }
-
         intentSite.setData(Uri.parse(site));
         itemSite.setIntent(intentSite);
+
+        MenuItem itemSMS = menu.add("Enviar sms");
+        Intent intentSMS = new Intent(Intent.ACTION_VIEW);
+        intentSMS.setData(Uri.parse("sms:" + aluno.getTel()));
+        itemSMS.setIntent(intentSMS);
+
+
+        MenuItem itemMapa = menu.add("Visualizar mapa");
+        Intent intentMapa = new Intent(Intent.ACTION_VIEW);
+        intentMapa.setData(Uri.parse("geo:0,0?q=" + aluno.getEnd()));
+        itemMapa.setIntent(intentMapa);
+
+
+        MenuItem itemLigar = menu.add("Ligar");
+        itemLigar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+
+                if (ActivityCompat.checkSelfPermission(ListaAlunosActivity.this,
+                        Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(ListaAlunosActivity.this, new  String[]{Manifest.permission.CALL_PHONE}, 123);
+                }else {
+                    Intent intentLigar = new Intent(Intent.ACTION_CALL);
+                    intentLigar.setData(Uri.parse("tel:" + aluno.getTel()));
+                    startActivity(intentLigar);
+                }
+                return false;
+            }
+        });
+
 
         deletar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
