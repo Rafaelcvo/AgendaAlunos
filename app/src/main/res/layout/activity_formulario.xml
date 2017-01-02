@@ -12,6 +12,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="225dp"
+       >
+    <ImageView
+        android:id="@+id/formulario_foto"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/ic_person"
+        android:background="@color/fundo"/>
+
+    <Button
+        android:id="@+id/formulario_botao_foto"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:background="@drawable/fundo_camera"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+       />
+    </RelativeLayout>
 
     <EditText
         android:layout_width="match_parent"
