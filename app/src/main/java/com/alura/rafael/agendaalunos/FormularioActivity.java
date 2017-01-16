@@ -1,6 +1,9 @@
 package com.alura.rafael.agendaalunos;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,6 +16,8 @@ import android.widget.Toast;
 
 import com.alura.rafael.agendaalunos.dao.AlunoDao;
 import com.alura.rafael.agendaalunos.modelo.Aluno;
+
+import java.io.File;
 
 public class FormularioActivity extends AppCompatActivity {
 
@@ -42,6 +47,18 @@ public class FormularioActivity extends AppCompatActivity {
 //            }
 //        });
 
+//        iniciando o botao da camera
+        Button botaoFoto = (Button) findViewById(R.id.formulario_botao_foto);
+        botaoFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                String caminhoFoto = getExternalFilesDir(null) + "/" + System.currentTimeMillis()  + ".jpg";
+                File arquivoFoto = new File(caminhoFoto);
+                intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(arquivoFoto));
+                startActivity(intentCamera);
+            }
+        });
 
     }
 
